@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Film List</title>
+</head>
+<body style="background:#fff; font-family:Arial;">
+  <h1>🎥 All Films</h1>
+  <a href="/upload">➕ Upload Film</a>
+  <hr>
+  <% if (films.length === 0) { %>
+    <p>No films uploaded yet.</p>
+  <% } %>
+  <% films.forEach(film => { %>
+    <div style="border:1px solid #ccc; padding:10px; margin:10px; width:300px;">
+      <img src="<%= film.image %>" style="width:100%; border-radius:8px;"><br>
+      <h3><%= film.name %></h3>
+      <a href="<%= film.link %>" target="_blank">Watch Film</a>
+    </div>
+  <% }) %>
+</body>
+</html>
