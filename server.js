@@ -3,12 +3,13 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
-
 const app = express();
-const PORT = 3000;
 
-// MongoDB Connect
-mongoose.connect("mongodb://localhost:27017/filmsDB")
+const PORT = process.env.PORT || 3000;
+
+// MongoDB Connection
+const mongoUri = "mongodb://mongo:GArTboPPBJASHJnPCZcvxkHuSZDDjjTm@metro.proxy.rlwy.net:10485/filmsDB";
+mongoose.connect(mongoUri)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
@@ -20,7 +21,7 @@ const filmSchema = new mongoose.Schema({
 });
 const Film = mongoose.model("Film", filmSchema);
 
-// File Upload Config
+// Multer File Upload Config
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -35,7 +36,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("uploads"));
 
-// ✅ Public Page (View All Films)
+// ✅ Public Page (All Films)
 app.get("/", async (req, res) => {
   const films = await Film.find();
   res.render("films", { films });
@@ -63,4 +64,4 @@ app.post("/upload", upload.single("filmPhoto"), async (req, res) => {
   res.redirect("/");
 });
 
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
