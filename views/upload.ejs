@@ -2,52 +2,15 @@
 <html>
 <head>
   <title>🎬 Upload Film</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body {
-      background: #f3f3f3;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-    }
-    .upload-box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      width: 320px;
-      text-align: center;
-    }
-    h1 {
-      margin-bottom: 20px;
-      color: #222;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin: 10px 0 5px;
-    }
-    input {
-      width: 95%;
-      padding: 8px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      background: #007bff;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
+    body { background:#f3f3f3; font-family:Arial; display:flex; justify-content:center; align-items:center; min-height:100vh; margin:0; }
+    .upload-box { background:white; padding:30px; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); width:320px; text-align:center; }
+    h1 { margin-bottom:20px; color:#222; }
+    label { font-weight:bold; display:block; margin:10px 0 5px; }
+    input { width:95%; padding:8px; margin-bottom:15px; border:1px solid #ccc; border-radius:5px; }
+    button { background:#007bff; color:white; border:none; padding:10px 15px; border-radius:5px; font-weight:bold; cursor:pointer; }
+    button:hover { background:#0056b3; }
   </style>
 </head>
 <body>
@@ -55,7 +18,7 @@
     <h1>🎬 Upload Film</h1>
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <label>Your Email:</label>
-      <input type="email" name="email" placeholder="owner email" required>
+      <input type="email" name="email" placeholder="Owner email" required>
 
       <label>Film Name:</label>
       <input type="text" name="filmName" placeholder="Enter film name" required>
