@@ -1,21 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Film List</title>
+  <title>🎥 Film List</title>
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    h1 {
+      margin: 20px 0;
+      color: #222;
+    }
+    a.upload-link {
+      display: inline-block;
+      padding: 8px 12px;
+      background: #007bff;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a.upload-link:hover {
+      background: #0056b3;
+    }
+    .films-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+    .film-card {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding: 10px;
+      width: 280px;
+      text-align: left;
+      transition: transform 0.2s;
+    }
+    .film-card:hover {
+      transform: scale(1.02);
+    }
+    .film-card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .film-card h3 {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .film-card a {
+      text-decoration: none;
+      color: #007bff;
+      font-weight: bold;
+    }
+    .film-card a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
-<body style="background:#fff; font-family:Arial;">
+<body>
   <h1>🎥 All Films</h1>
-  <a href="/upload">➕ Upload Film</a>
+  <a href="/upload" class="upload-link">➕ Upload Film</a>
   <hr>
+
   <% if (films.length === 0) { %>
     <p>No films uploaded yet.</p>
   <% } %>
-  <% films.forEach(film => { %>
-    <div style="border:1px solid #ccc; padding:10px; margin:10px; width:300px;">
-      <img src="<%= film.image %>" style="width:100%; border-radius:8px;"><br>
-      <h3><%= film.name %></h3>
-      <a href="<%= film.link %>" target="_blank">Watch Film</a>
-    </div>
-  <% }) %>
+
+  <div class="films-container">
+    <% films.forEach(film => { %>
+      <div class="film-card">
+        <img src="<%= film.image %>" alt="<%= film.name %>">
+        <h3><%= film.name %></h3>
+        <a href="<%= film.link %>" target="_blank">▶ Watch Film</a>
+      </div>
+    <% }) %>
+  </div>
 </body>
 </html>
