@@ -3,15 +3,34 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
-require('dotenv').config();
+require("dotenv").config();
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// MongoDB Connection
+// MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
+
+// Cloudinary Config
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Multer Storage (Cloudinary)
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "films",
+    allowed_formats: ["jpg", "jpeg", "png"]
+  }
+});
+const upload = multer({ storage });
 
 // Film Schema
 const filmSchema = new mongoose.Schema({
@@ -21,16 +40,9 @@ const filmSchema = new mongoose.Schema({
 });
 const Film = mongoose.model("Film", filmSchema);
 
-// Multer Config
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, "uploads/"),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
-});
-const upload = multer({ storage });
-
+// Middlewares
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("uploads"));
 
 // Routes
 app.get("/", async (req, res) => {
@@ -49,7 +61,7 @@ app.post("/upload", upload.single("filmPhoto"), async (req, res) => {
   const newFilm = new Film({
     name: req.body.filmName,
     link: req.body.filmLink,
-    image: req.file.filename
+    image: req.file.path // Cloudinary hosted URL
   });
 
   await newFilm.save();
